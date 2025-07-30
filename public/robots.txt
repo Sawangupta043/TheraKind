@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://therakind.netlify.app/sitemap.xml
+
+# Disallow private areas
+Disallow: /client-dashboard
+Disallow: /therapist-dashboard
+Disallow: /login
+Disallow: /register
+Disallow: /password-reset
+
+# Allow public pages
+Allow: /
+Allow: /about
+Allow: /faq
+Allow: /contact 
