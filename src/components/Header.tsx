@@ -5,6 +5,7 @@ import NotificationBell from './NotificationBell';
 import { useAuth } from '../contexts/AuthContext';
 import { signOutUser } from '../config/firebase';
 import ProfileModal from './ProfileModal';
+import logo from '../assets/logo.png';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -32,8 +33,8 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-300 to-pink-200 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-              <Heart className="w-4 h-4 text-purple-600" />
+            <div className="w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200 overflow-hidden">
+              <img src={logo} alt="TheraKind Logo" className="w-full h-full object-cover" />
             </div>
             <span className="text-xl font-bold text-gray-900">TheraKind</span>
           </Link>
