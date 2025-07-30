@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
               <div className="w-8 h-8 bg-gradient-to-br from-purple-300 to-pink-200 rounded-full flex items-center justify-center">
                 <Heart className="w-4 h-4 text-purple-600" />
               </div>
-              <span className="text-xl font-bold">TheraKind</span>
+              <span className="text-xl font-bold">TheraSoul</span>
             </div>
             <p className="text-gray-300 mb-6 max-w-md">
               Connecting you with licensed therapists across India for personalized mental wellness support. 
@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
             <div className="flex space-x-4">
               <div className="flex items-center space-x-2 text-gray-300">
                 <Mail className="w-4 h-4" />
-                <span className="text-sm">therakind3@gmail.com</span>
+                <span className="text-sm">therasoul3@gmail.com</span>
               </div>
             </div>
           </div>
@@ -66,7 +66,7 @@ const Footer: React.FC = () => {
         <div className="border-t border-gray-800 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © 2025 TheraKind. All rights reserved.
+              © 2025 TheraSoul. All rights reserved.
             </p>
             <p className="text-gray-400 text-sm mt-2 md:mt-0">
               Made with ❤️ for mental wellness

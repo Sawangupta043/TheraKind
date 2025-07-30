@@ -11,15 +11,15 @@ const FAQ: React.FC = () => {
       icon: HelpCircle,
       questions: [
         {
-          question: 'What is TheraKind?',
-          answer: 'TheraKind is a mental wellness platform that connects clients with licensed therapists across India. We offer both online and in-person therapy sessions to make mental health care accessible and convenient.'
+          question: 'What is TheraSoul?',
+          answer: 'TheraSoul is a mental wellness platform that connects clients with licensed therapists across India. We offer both online and in-person therapy sessions to make mental health care accessible and convenient.'
         },
         {
-          question: 'How does TheraKind work?',
+          question: 'How does TheraSoul work?',
           answer: 'Simply browse our verified therapists, filter by your preferences (specialization, language, location), book a session that fits your schedule, make payment, and attend your therapy session. It\'s that simple!'
         },
         {
-          question: 'Is TheraKind available across India?',
+          question: 'Is TheraSoul available across India?',
           answer: 'Yes! We have licensed therapists in over 50 cities across India. For online sessions, you can connect with therapists from anywhere. For in-person sessions, you can find therapists in your city.'
         },
         {
@@ -61,11 +61,11 @@ const FAQ: React.FC = () => {
       icon: Heart,
       questions: [
         {
-          question: 'How do I join TheraKind as a therapist?',
+          question: 'How do I join TheraSoul as a therapist?',
           answer: 'Register as a therapist on our platform, upload your license documents, set your profile with specializations and pricing, and submit for verification. We\'ll review your application within 24 hours.'
         },
         {
-          question: 'What are the requirements to become a therapist on TheraKind?',
+          question: 'What are the requirements to become a therapist on TheraSoul?',
           answer: 'You must be a licensed mental health professional with valid credentials, have relevant experience in therapy/counseling, and be able to provide quality care to clients.'
         },
         {
@@ -134,12 +134,12 @@ const FAQ: React.FC = () => {
       icon: Shield,
       questions: [
         {
-          question: 'Is my data secure on TheraKind?',
+          question: 'Is my data secure on TheraSoul?',
           answer: 'Yes, we use bank-level encryption and security measures to protect your data. All information is stored securely and we comply with data protection regulations.'
         },
         {
           question: 'Who can see my therapy session details?',
-          answer: 'Only you and your therapist have access to session details. TheraKind staff cannot view session content, and we never share information with third parties.'
+                      answer: 'Only you and your therapist have access to session details. TheraSoul staff cannot view session content, and we never share information with third parties.'
         },
         {
           question: 'How do you ensure video call privacy?',
@@ -167,7 +167,7 @@ const FAQ: React.FC = () => {
               Frequently Asked Questions
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed">
-              Find answers to common questions about TheraKind, our services, and how we can support your mental wellness journey.
+              Find answers to common questions about TheraSoul, our services, and how we can support your mental wellness journey.
             </p>
           </div>
         </div>

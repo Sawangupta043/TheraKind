@@ -39,7 +39,7 @@ const About: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              About <span className="text-purple-600">TheraKind</span>
+              About <span className="text-purple-600">TheraSoul</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               We're on a mission to make quality mental health care accessible to everyone in India. 
@@ -127,7 +127,7 @@ const About: React.FC = () => {
       <div className="bg-gradient-to-br from-gray-50 to-purple-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">How TheraKind Works</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">How TheraSoul Works</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               We've made it simple to find and connect with the right therapist for your needs
             </p>

@@ -9,7 +9,7 @@ const Hero: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            <span className="text-purple-600">TheraKind</span>
+            <span className="text-purple-600">TheraSoul</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-8 font-light">
             Your healing begins here.

@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://therakind.netlify.app/sitemap.xml
+Sitemap: https://therasoul.netlify.app/sitemap.xml
 
 # Disallow private areas
 Disallow: /client-dashboard

@@ -32,7 +32,7 @@ export const sendBookingConfirmation = async (
   time: string,
   type: 'online' | 'in-person'
 ) => {
-  const subject = 'Session Booking Confirmation - TheraKind';
+  const subject = 'Session Booking Confirmation - TheraSoul';
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #6B46C1;">Session Booking Confirmation</h2>
@@ -44,7 +44,7 @@ export const sendBookingConfirmation = async (
         <p><strong>Type:</strong> ${type === 'online' ? 'Online Session' : 'In-Person Session'}</p>
       </div>
       <p>You will receive a confirmation from your therapist shortly.</p>
-      <p>Thank you for choosing TheraKind!</p>
+              <p>Thank you for choosing TheraSoul!</p>
     </div>
   `;
 
@@ -58,7 +58,7 @@ export const sendSessionReminder = async (
   time: string,
   meetLink?: string
 ) => {
-  const subject = 'Session Reminder - TheraKind';
+  const subject = 'Session Reminder - TheraSoul';
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #6B46C1;">Session Reminder</h2>
@@ -77,11 +77,11 @@ export const sendSessionReminder = async (
 };
 
 export const sendPasswordResetEmail = async (email: string, resetLink: string) => {
-  const subject = 'Password Reset - TheraKind';
+  const subject = 'Password Reset - TheraSoul';
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #6B46C1;">Password Reset Request</h2>
-      <p>You requested a password reset for your TheraKind account.</p>
+              <p>You requested a password reset for your TheraSoul account.</p>
       <p>Click the button below to reset your password:</p>
       <a href="${resetLink}" style="display: inline-block; background: #6B46C1; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 20px 0;">
         Reset Password

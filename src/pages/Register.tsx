@@ -129,7 +129,7 @@ const Register: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-purple-50 py-12 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h1 className="text-3xl font-bold text-gray-900 text-center mb-8">Join TheraKind</h1>
+          <h1 className="text-3xl font-bold text-gray-900 text-center mb-8">Join TheraSoul</h1>
           
           {/* Role Selection */}
           <div className="flex bg-gray-100 rounded-full p-1 mb-8">

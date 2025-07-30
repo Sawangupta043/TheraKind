@@ -34,9 +34,9 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
             <div className="w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200 overflow-hidden">
-              <img src={logo} alt="TheraKind Logo" className="w-full h-full object-cover" />
-            </div>
-            <span className="text-xl font-bold text-gray-900">TheraKind</span>
+                          <img src={logo} alt="TheraSoul Logo" className="w-full h-full object-cover" />
+          </div>
+          <span className="text-xl font-bold text-gray-900">TheraSoul</span>
           </Link>
 
           {/* Desktop Navigation */}

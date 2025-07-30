@@ -140,7 +140,7 @@ class NotificationService {
   // Save notifications to localStorage
   private saveNotifications() {
     try {
-      localStorage.setItem('therakind_notifications', JSON.stringify(this.notifications));
+      localStorage.setItem('therasoul_notifications', JSON.stringify(this.notifications));
     } catch (error) {
       console.error('Error saving notifications:', error);
     }
@@ -149,7 +149,7 @@ class NotificationService {
   // Load notifications from localStorage
   private loadNotifications() {
     try {
-      const saved = localStorage.getItem('therakind_notifications');
+      const saved = localStorage.getItem('therasoul_notifications');
       if (saved) {
         this.notifications = JSON.parse(saved).map((n: any) => ({
           ...n,

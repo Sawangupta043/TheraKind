@@ -80,7 +80,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ apiKey }) => {
 
     try {
       // Create context-aware prompt
-      const prompt = `You are KindBot, a helpful chatbot for TheraKind therapy platform.
+      const prompt = `You are SoulBot, a helpful chatbot for TheraSoul therapy platform.
 
 Keep responses SHORT, CONCISE, and DIRECT. Maximum 2-3 sentences.
 
