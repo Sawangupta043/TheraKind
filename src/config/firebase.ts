@@ -3,6 +3,7 @@ import {
   getAuth, 
   GoogleAuthProvider, 
   signInWithPopup, 
+  signInWithRedirect,
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   signOut, 
@@ -11,7 +12,8 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
   confirmPasswordReset,
-  updateProfile
+  updateProfile,
+  getRedirectResult
 } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, collection, addDoc, updateDoc, query, where, getDocs, orderBy, limit, deleteDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
@@ -20,9 +22,9 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'fire
 // Replace these with your actual Firebase project config
 const firebaseConfig = {
   apiKey: "AIzaSyBoZfS4rJ-XmBMlwaEcr8Uu4U9Iyvy7eQk",
-  authDomain: "therakind-78b40.firebaseapp.com",
-  projectId: "therakind-78b40",
-  storageBucket: "therakind-78b40.firebasestorage.app",
+  authDomain: "therasoul-78b40.firebaseapp.com",
+  projectId: "therasoul-78b40",
+  storageBucket: "therasoul-78b40.firebasestorage.app",
   messagingSenderId: "103160358356",
   appId: "1:103160358356:web:ea9d4b251c71a8a996a241",
   measurementId: "G-FGCNYQ1SNZ"
@@ -40,9 +42,74 @@ const googleProvider = new GoogleAuthProvider();
 export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
+    
+    // Check if user profile exists in Firestore
+    const userProfile = await getUserProfile(result.user.uid);
+    
+    if (!userProfile) {
+      // This is a new user, we need to create a profile
+      // Don't assign a role yet - let user choose in the modal
+      await setDoc(doc(db, 'users', result.user.uid), {
+        name: result.user.displayName || 'User',
+        email: result.user.email,
+        role: null, // No role assigned yet
+        createdAt: new Date(),
+        isVerified: false,
+        emailVerified: result.user.emailVerified
+      });
+    }
+    
     return result.user;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Google sign-in error:', error);
+    
+    // Handle popup-blocked error
+    if (error.code === 'auth/popup-blocked') {
+      throw new Error('Popup was blocked by the browser. Please allow popups for this site and try again.');
+    }
+    
+    // Handle other common errors
+    if (error.code === 'auth/popup-closed-by-user') {
+      throw new Error('Sign-in was cancelled. Please try again.');
+    }
+    
+    throw error;
+  }
+};
+
+export const signInWithGoogleRedirect = async () => {
+  try {
+    await signInWithRedirect(auth, googleProvider);
+  } catch (error: any) {
+    console.error('Google redirect sign-in error:', error);
+    throw error;
+  }
+};
+
+export const getGoogleRedirectResult = async () => {
+  try {
+    const result = await getRedirectResult(auth);
+    
+    if (result) {
+      // Check if user profile exists in Firestore
+      const userProfile = await getUserProfile(result.user.uid);
+      
+      if (!userProfile) {
+        // This is a new user, we need to create a profile
+        await setDoc(doc(db, 'users', result.user.uid), {
+          name: result.user.displayName || 'User',
+          email: result.user.email,
+          role: null, // No role assigned yet
+          createdAt: new Date(),
+          isVerified: false,
+          emailVerified: result.user.emailVerified
+        });
+      }
+    }
+    
+    return result;
+  } catch (error: any) {
+    console.error('Google redirect result error:', error);
     throw error;
   }
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, Heart, AlertCircle } from 'lucide-react';
-import { signInWithEmail, signInWithGoogle, sendPasswordReset } from '../config/firebase';
+import { signInWithEmail, signInWithGoogle, signInWithGoogleRedirect, sendPasswordReset } from '../config/firebase';
 import { useAuth } from '../contexts/AuthContext';
 import PasswordResetModal from '../components/PasswordResetModal';
 
@@ -32,12 +32,9 @@ const Login: React.FC = () => {
     try {
       await signInWithEmail(formData.email, formData.password);
       
-      // Redirect based on user profile role
-      if (userProfile?.role === 'therapist') {
-        navigate('/therapist-dashboard');
-      } else {
-        navigate('/client-dashboard');
-      }
+      // Redirect will be handled by AuthContext after profile is loaded
+      // For now, redirect to home page and let AuthContext handle the final redirect
+      navigate('/');
     } catch (error: any) {
       setError(error.message || 'Failed to sign in');
     } finally {
@@ -52,14 +49,20 @@ const Login: React.FC = () => {
     try {
       await signInWithGoogle();
       
-      // Redirect based on user profile role
-      if (userProfile?.role === 'therapist') {
-        navigate('/therapist-dashboard');
-      } else {
-        navigate('/client-dashboard');
-      }
+      // Redirect will be handled by AuthContext after profile is loaded
+      navigate('/');
     } catch (error: any) {
-      setError(error.message || 'Failed to sign in with Google');
+      // If popup is blocked, try redirect method
+      if (error.message && error.message.includes('Popup was blocked')) {
+        try {
+          await signInWithGoogleRedirect();
+          // The redirect will handle the navigation automatically
+        } catch (redirectError: any) {
+          setError('Please allow popups for this site or try signing in with email instead.');
+        }
+      } else {
+        setError(error.message || 'Failed to sign in with Google');
+      }
     } finally {
       setLoading(false);
     }

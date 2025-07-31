@@ -13,8 +13,10 @@ import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
 import Chatbot from './components/Chatbot';
 import ProtectedRoute from './components/ProtectedRoute';
+import AuthRedirect from './components/AuthRedirect';
+import RoleSelectionModal from './components/RoleSelectionModal';
 import { GEMINI_API_KEY } from './config/api';
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 export interface User {
   id: string;
@@ -54,42 +56,56 @@ export interface Session {
   meetLink?: string;
 }
 
+// Component that uses auth context and renders modal
+const AppContent: React.FC = () => {
+  const { showRoleSelection, setShowRoleSelection } = useAuth();
+  
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <AuthRedirect />
+      <Header />
+      <Routes>
+        <Route path="/" element={<Hero />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/password-reset" element={<PasswordReset />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/contact" element={<Contact />} />
+
+        {/* Protected Routes */}
+        <Route 
+          path="/client-dashboard" 
+          element={
+            <ProtectedRoute requiredRole="client">
+              <ClientDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/therapist-dashboard" 
+          element={
+            <ProtectedRoute requiredRole="therapist">
+              <TherapistDashboard />
+            </ProtectedRoute>
+          } 
+        />
+      </Routes>
+      <Footer />
+      <Chatbot apiKey={GEMINI_API_KEY} />
+      <RoleSelectionModal 
+        isOpen={showRoleSelection} 
+        onClose={() => setShowRoleSelection(false)} 
+      />
+    </div>
+  );
+};
+
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50">
-          <Header />
-          <Routes>
-                                <Route path="/" element={<Hero />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/password-reset" element={<PasswordReset />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/faq" element={<FAQ />} />
-                    <Route path="/contact" element={<Contact />} />
-            
-            {/* Protected Routes */}
-            <Route 
-              path="/client-dashboard" 
-              element={
-                <ProtectedRoute requiredRole="client">
-                  <ClientDashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/therapist-dashboard" 
-              element={
-                <ProtectedRoute requiredRole="therapist">
-                  <TherapistDashboard />
-                </ProtectedRoute>
-              } 
-            />
-          </Routes>
-          <Footer />
-          <Chatbot apiKey={GEMINI_API_KEY} />
-        </div>
+        <AppContent />
       </Router>
     </AuthProvider>
   );
