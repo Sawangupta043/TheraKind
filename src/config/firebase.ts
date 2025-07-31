@@ -13,9 +13,11 @@ import {
   sendPasswordResetEmail,
   confirmPasswordReset,
   updateProfile,
-  getRedirectResult
+  getRedirectResult,
+  setPersistence,
+  browserLocalPersistence
 } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc, collection, addDoc, updateDoc, query, where, getDocs, orderBy, limit, deleteDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc, updateDoc, query, where, getDocs, orderBy, limit, deleteDoc, serverTimestamp } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 
 // Your Firebase configuration
@@ -37,6 +39,9 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 const googleProvider = new GoogleAuthProvider();
+
+// Set auth persistence
+setPersistence(auth, browserLocalPersistence);
 
 // Authentication functions
 export const signInWithGoogle = async () => {
@@ -131,7 +136,7 @@ export const signUpWithEmail = async (email: string, password: string, name: str
       name,
       email,
       role,
-      createdAt: new Date(),
+      createdAt: serverTimestamp(),
       isVerified: false,
       emailVerified: false
     });
@@ -254,8 +259,8 @@ export const createSession = async (sessionData: any) => {
   try {
     const docRef = await addDoc(collection(db, 'sessions'), {
       ...sessionData,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
     });
     return docRef.id;
   } catch (error) {
@@ -318,7 +323,7 @@ export const createFeedback = async (feedbackData: any) => {
   try {
     const docRef = await addDoc(collection(db, 'feedback'), {
       ...feedbackData,
-      createdAt: new Date()
+      createdAt: serverTimestamp()
     });
     return docRef.id;
   } catch (error) {
@@ -345,4 +350,4 @@ export const getFeedback = async (therapistId: string) => {
   }
 };
 
-export { auth, db, storage }; 
+export { auth, db, storage };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
@@ -58,7 +58,7 @@ export interface Session {
 
 // Component that uses auth context and renders modal
 const AppContent: React.FC = () => {
-  const { showRoleSelection, setShowRoleSelection } = useAuth();
+  const { showRoleSelection, setShowRoleSelection, user } = useAuth();
   
   return (
     <div className="min-h-screen bg-gray-50">
@@ -90,6 +90,7 @@ const AppContent: React.FC = () => {
             </ProtectedRoute>
           } 
         />
+        <Route path="/ClientDashboard" element={user ? <ClientDashboard /> : <Navigate to="/login" />} />
       </Routes>
       <Footer />
       <Chatbot apiKey={GEMINI_API_KEY} />

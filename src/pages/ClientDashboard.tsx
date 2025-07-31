@@ -7,7 +7,7 @@ import FeedbackModal from '../components/FeedbackModal';
 import EmailVerification from '../components/EmailVerification';
 import ProfileCard from '../components/ProfileCard';
 import { useAuth } from '../contexts/AuthContext';
-import { getTherapists, createSession, getSessions } from '../config/firebase';
+import { getTherapists, createSession, getSessions, createFeedback } from '../config/firebase';
 import { sendBookingConfirmation } from '../services/emailService';
 import { notificationService } from '../services/notificationService';
 
@@ -74,6 +74,7 @@ const ClientDashboard: React.FC = () => {
   const [selectedTherapist, setSelectedTherapist] = useState<Therapist | null>(null);
   const [feedbackSession, setFeedbackSession] = useState<Session | null>(null);
   const [activeTab, setActiveTab] = useState<'discover' | 'sessions' | 'profile'>('discover');
+  const [error, setError] = useState<string | null>(null);
 
   // Load data on component mount
   useEffect(() => {
@@ -91,6 +92,7 @@ const ClientDashboard: React.FC = () => {
         setSessions(sessionsData as Session[]);
       } catch (error) {
         console.error('Error loading data:', error);
+        setError('Failed to load data. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -159,18 +161,18 @@ const ClientDashboard: React.FC = () => {
       notificationService.createBookingConfirmation(therapist.name, date, time);
     } catch (error) {
       console.error('Error creating session:', error);
+      setError('Failed to create booking. Please try again.');
     }
   };
 
-  const handleFeedbackSubmit = (sessionId: string, rating: number, feedback: string) => {
-    const updatedSessions = sessions.map(session => 
-      session.id === sessionId 
-        ? { ...session, status: 'completed' as const }
-        : session
-    );
-    setSessions(updatedSessions);
+  const handleFeedbackSubmit = async (sessionId: string, rating: number, feedback: string) => {
     setFeedbackSession(null);
-    // In real app, would save feedback to backend
+    try {
+      await createFeedback({ sessionId, rating, feedback });
+      // Optionally update local state or refetch sessions
+    } catch (error) {
+      alert('Failed to submit feedback. Please try again.');
+    }
   };
 
   return (

@@ -34,7 +34,7 @@ const Login: React.FC = () => {
       
       // Redirect will be handled by AuthContext after profile is loaded
       // For now, redirect to home page and let AuthContext handle the final redirect
-      navigate('/');
+      navigate('/ClientDashboard');
     } catch (error: any) {
       setError(error.message || 'Failed to sign in');
     } finally {
@@ -185,12 +185,6 @@ const Login: React.FC = () => {
             >
               Sign up
             </button>
-          </p>
-        </div>
-
-        <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-          <p className="text-xs text-gray-500 text-center">
-            Demo: Use any email (add "therapist" for therapist login) and password to sign in
           </p>
         </div>
       </div>

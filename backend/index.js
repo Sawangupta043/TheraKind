@@ -30,6 +30,11 @@ mongoose.connect(process.env.MONGODB_URI, {
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
+// Check for required environment variables
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET is not set in environment variables');
+}
+
 // Root route
 app.get('/', (req, res) => {
   res.send('Backend is running!');
@@ -202,6 +207,9 @@ app.delete('/api/sessions/:id', auth, async (req, res) => {
     if (session.clientId.toString() !== req.user.userId && session.therapistId.toString() !== req.user.userId) {
       return res.status(403).json({ message: 'Not authorized' });
     }
+    if (session.status === 'cancelled' || session.status === 'completed') {
+      return res.status(400).json({ message: 'Session cannot be cancelled' });
+    }
     session.status = 'cancelled';
     await session.save();
     res.json({ message: 'Session cancelled' });
@@ -214,6 +222,11 @@ app.delete('/api/sessions/:id', auth, async (req, res) => {
 app.post('/api/feedback', auth, async (req, res) => {
   try {
     const { sessionId, therapistId, rating, feedback } = req.body;
+    const session = await Session.findById(sessionId);
+    if (!session) return res.status(404).json({ message: 'Session not found' });
+    if (session.clientId.toString() !== req.user.userId) {
+      return res.status(403).json({ message: 'Not authorized to submit feedback for this session' });
+    }
     const fb = new Feedback({
       sessionId,
       clientId: req.user.userId,
@@ -253,6 +266,9 @@ app.get('/api/feedback', auth, async (req, res) => {
 app.post('/api/notifications', auth, async (req, res) => {
   try {
     const { message } = req.body;
+    if (!message || typeof message !== 'string' || message.length < 1 || message.length > 500) {
+      return res.status(400).json({ message: 'Invalid notification message' });
+    }
     const notification = new Notification({ userId: req.user.userId, message });
     await notification.save();
     res.status(201).json(notification);
@@ -304,7 +320,9 @@ app.get('/api/admin/overview', auth, async (req, res) => {
 app.get('/api/admin/users', auth, async (req, res) => {
   try {
     if (req.user.role !== 'admin') return res.status(403).json({ message: 'Not authorized' });
-    const users = await User.find().select('-password');
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const users = await User.find().select('-password').skip((page - 1) * limit).limit(limit);
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
